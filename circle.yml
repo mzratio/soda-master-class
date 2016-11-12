@@ -1,0 +1,36 @@
+machine:
+    node:
+        version: 4.2.3
+
+dependencies:
+    pre:
+        - npm install -g serverless@1.1.0
+    override:
+        - npm install
+
+test:
+    override:
+        - npm run test
+
+deployment:
+    development:
+        branch: dev
+        commands:
+            - >
+                export STAGE=dev &&
+                export ACCOUNTID=mzorzella &&
+                npm run deploy
+    qa:
+        branch: qa
+        commands:
+            - >
+                export STAGE=qa &&
+                export ACCOUNTID=mzorzella &&
+                npm run deploy
+    uat:
+        branch: uat
+        commands:
+            - >
+                export STAGE=prod &&
+                export ACCOUNTID=mzorzella &&
+                npm run deploy
