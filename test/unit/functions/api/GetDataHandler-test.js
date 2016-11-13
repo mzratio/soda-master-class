@@ -6,8 +6,8 @@ import expect, { createSpy } from 'expect'
 import ContentApiHandler from '../../../../src/functions/api/GetDataHandler'
 
 describe('GetDataHandler tests', () => {
-  let handler, mockCacheService, mockConfigService, event, context, decodedJwt
-  const jwtSecret = 'my_alki_secret'
+  let handler, mockDataSource, event, context, decodedJwt
+  const jwtSecret = 'soda_academy_secret'
 
   beforeEach(() => {
     event = {}
@@ -16,15 +16,18 @@ describe('GetDataHandler tests', () => {
     _.set(event, 'headers.Accept', 'application/json')
     decodedJwt = jwt.decode(event.headers['x-access-token'])
 
-    mockCacheService = {
+    mockDataSource = {
       getData: createSpy().andReturn(Promise.resolve())
     }
-    mockConfigService = {
-      get: () => { return jwtSecret }
-    }
-    handler = new ContentApiHandler(mockCacheService, mockConfigService)
+    handler = new ContentApiHandler(mockDataSource)
   })
 
   describe('when execute is called', () => {
+    it('should get data from DataSource', () => {
+      return handler.execute(event)
+        .then(() => {
+          expect(mockDataSource.getData).toHaveBeenCalled()
+        })
+    })
   })
 })
