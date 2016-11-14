@@ -9,7 +9,6 @@ const gzip = require('gulp-zip')
 const grelease = require('gulp-github-release')
 const moment = require('moment')
 
-
 const owner = process.env.OWNER
 const stage = process.env.STAGE || 'dev'
 const accountid = process.env.ACCOUNTID
@@ -73,7 +72,7 @@ console.log('Build #: ', ciBuildNum)
 const ciBranch = process.env.CIRCLE_BRANCH || 'dev'
 console.log('Branch: ', ciBranch)
 
-let release = '#' + ciBuildNum + '_' + ciBranch + '_' + (moment().utc().format('YYYYMMDDHHmm'))
+const release = '#' + ciBuildNum + '_' + ciBranch + '_' + (moment().utc().format('YYYYMMDDHHmm'))
 console.log('Release: ' + release)
 
 const releaseZipFilename = 'artifacts.zip'
