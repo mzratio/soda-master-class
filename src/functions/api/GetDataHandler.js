@@ -13,5 +13,6 @@ export default class GetDataHandler extends ApiHandler {
 
   _getResponse(event) {
     return this.dataSource.getData()
+    // return Promise.resolve([])
   }
 }
