@@ -1,0 +1,63 @@
+{
+  "name": "soda-master-class",
+  "version": "1.0.0",
+  "description": "Sample serverless microservice for the soda academy master class presentation",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzratio/soda-master-class.git"
+  },
+  "author": "Ratio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzratio/soda-master-class/issues"
+  },
+  "homepage": "https://github.com/mzratio/soda-master-class#readme",
+  "scripts": {
+    "build": "export SERVICE_NAME='soda-master-class' && gulp",
+    "deploy:local": "export AWS_PROFILE=mzorzella-dev && npm run deploy",
+    "deploy": "npm run build && cd dist && npm prune --production && serverless deploy --stage $STAGE --verbose",
+    "remove": "cd dist && serverless remove --stage $STAGE",
+    "test": "export NODE_ENV=test; export SUPPRESS_LOGGER=true; mocha --compilers js:babel-register ./test/unit --recursive",
+    "test:watch": "export NODE_ENV=test; npm test -- --watch"
+  },
+  "dependencies": {
+    "aurelia-dependency-injection": "^1.1.0",
+    "aurelia-polyfills": "^1.1.1",
+    "babel-polyfill": "^6.9.1",
+    "bluebird": "^3.4.1",
+    "json-stringify-safe": "^5.0.1",
+    "jsonwebtoken": "^7.1.7",
+    "lodash": "^4.14.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.11.6",
+    "contentful-space-sync": "^4.0.9",
+    "del": "^2.2.2",
+    "eslint": "^3.1.1",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-promise": "^2.0.0",
+    "eslint-plugin-standard": "^2.0.0",
+    "expect": "^1.20.2",
+    "fs-extra": "^0.30.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-debug": "^2.1.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-util": "^3.0.7",
+    "mocha": "^2.5.3",
+    "proxyquire": "^1.7.10",
+    "yargs": "^4.8.1"
+  }
+}

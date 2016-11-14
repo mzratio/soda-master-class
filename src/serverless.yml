@@ -1,0 +1,62 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    v1.docs.serverless.com
+#
+
+service: soda-master-class
+provider:
+    name: aws
+    runtime: nodejs4.3
+    region: us-west-2
+
+functions:
+    apigetdata:
+        handler: handler.getDataHandler
+        memorySize: 512
+        timeout: 10
+        events:
+            - http:
+                path: 'data'
+                method: GET
+                cors:  &idCors
+                    origins:
+                        - '*'
+                    headers:
+                        - Accept
+                        - x-access-token
+
+    tokengenerator:
+        handler: handler.tokenGeneratorHandler
+        memorySize: 128
+        timeout: 5
+        events:
+            - http:
+                path: 'tokengenerator'
+                method: POST
+                private: false
+
+# you can add CloudFormation resource templates here
+resources:
+    Resources:
+        IamPolicyInvokeFn:
+            Type: 'AWS::IAM::Policy'
+            Properties:
+                PolicyName: '${opt:stage}-${env:SERVICE_NAME, self:service}-policy-invoke-fn'
+                PolicyDocument:
+                    Version: '2012-10-17'
+                    Statement:
+                        -
+                            Effect: Allow
+                            Action:
+                                - 'lambda:InvokeFunction'
+                            Resource: 'arn:aws:lambda:${opt:region, self:provider.region}:${env:ACCOUNTID}:*'
+                Roles:
+                    -
+                        Ref: IamRoleLambdaExecution
