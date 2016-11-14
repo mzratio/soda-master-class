@@ -7,7 +7,13 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "export SERVICE_NAME='soda-master-class' && gulp",
+    "deploy:local": "export AWS_PROFILE=mzorzella-dev && npm run deploy",
+    "deploy": "npm run build && cd dist && npm prune --production && serverless deploy --stage $STAGE --verbose",
+    "release": "npm run build && gulp release",
+    "remove": "cd dist && serverless remove --stage $STAGE",
+    "test": "export NODE_ENV=test; export SUPPRESS_LOGGER=true; mocha --compilers js:babel-register ./test/unit --recursive",
+    "test:watch": "export NODE_ENV=test; npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -19,14 +25,6 @@
     "url": "https://github.com/mzratio/soda-master-class/issues"
   },
   "homepage": "https://github.com/mzratio/soda-master-class#readme",
-  "scripts": {
-    "build": "export SERVICE_NAME='soda-master-class' && gulp",
-    "deploy:local": "export AWS_PROFILE=mzorzella-dev && npm run deploy",
-    "deploy": "npm run build && cd dist && npm prune --production && serverless deploy --stage $STAGE --verbose",
-    "remove": "cd dist && serverless remove --stage $STAGE",
-    "test": "export NODE_ENV=test; export SUPPRESS_LOGGER=true; mocha --compilers js:babel-register ./test/unit --recursive",
-    "test:watch": "export NODE_ENV=test; npm test -- --watch"
-  },
   "dependencies": {
     "aurelia-dependency-injection": "^1.1.0",
     "aurelia-polyfills": "^1.1.1",
@@ -54,9 +52,12 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-debug": "^2.1.2",
+    "gulp-github-release": "^1.2.0",
     "gulp-replace": "^0.5.4",
     "gulp-util": "^3.0.7",
+    "gulp-zip": "^3.2.0",
     "mocha": "^2.5.3",
+    "moment": "^2.16.0",
     "proxyquire": "^1.7.10",
     "yargs": "^4.8.1"
   }
