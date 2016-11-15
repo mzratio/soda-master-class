@@ -29,5 +29,14 @@ describe('GetDataHandler tests', () => {
           expect(mockDataSource.getData).toHaveBeenCalled()
         })
     })
+
+    // it('should return 500 if getting data fails', () => {
+    //   const expectedError = new Error('Error from getData')
+    //   mockDataSource.getData.andReturn(Promise.reject(expectedError))
+    //   return handler.execute(event)
+    //     .then((res) => {
+    //       expect(res.statusCode).toEqual(500)
+    //     })
+    // })
   })
 })
